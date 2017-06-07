@@ -12,45 +12,45 @@ namespace BestRestaurants
         List<Cuisine> AllCuisine = Cuisine.GetAll();
         return View["index.cshtml", AllCuisine];
       };
-      Get["/restaurant"] = _ => {
-        List<Task> AllTasks = Task.GetAll();
-        return View["restaurants.cshtml", AllTasks];
+      Get["/restaurants"] = _ => {
+        List<Restaurant> AllResturants = Restaurant.GetAll();
+        return View["restaurants.cshtml", AllResturants];
       };
 
-      Get["/cuisine"] = _ => {
+      Get["/cuisines"] = _ => {
         List<Cuisine> AllCuisine = Cuisine.GetAll();
-        return View["cuisine.cshtml", AllCuisine];
+        return View["cuisines.cshtml", AllCuisine];
       };
 
-      Get["/cuisine/new"] = _ => {
-        return View["cuisine_form.cshtml"];
+      Get["/cuisines/new"] = _ => {
+        return View["cuisines_form.cshtml"];
       };
-      Post["/cuisine/new"] = _ => {
+      Post["/cuisines/new"] = _ => {
        Cuisine newCuisine = new Cuisine(Request.Form["cuisine-type"]);
        newCuisine.Save();
        return View["success.cshtml"];
       };
-      Get["/restaurant/new"] = _ => {
+      Get["/restaurants/new"] = _ => {
         List<Cuisine> AllCuisine = Cuisine.GetAll();
-        return View["restaurant_form.cshtml", AllCuisine];
+        return View["restaurants_form.cshtml", AllCuisine];
       };
-      Post["/restaurant/new"] = _ => {
-        Task newTask = new Task(Request.Form["restaurant-name"], Request.Form["cuisine-id"]);
-        newTask.Save();
+      Post["/restaurants/new"] = _ => {
+        Restaurant newRestaurant = new Restaurant(Request.Form["restaurant-name"], Request.Form["cuisine-id"]);
+        newRestaurant.Save();
         return View["success.cshtml"];
        };
 
-       Post["/restaurant/delete"] = _ => {
-         Task.DeleteAll();
+       Post["/restaurants/delete"] = _ => {
+         Restaurant.DeleteAll();
          return View["cleared.cshtml"];
        };
 
-       Get["/cuisine/{id}"] = parameters => {
+       Get["/cuisines/{id}"] = parameters => {
          Dictionary<string, object> model = new Dictionary<string, object>();
          var SelectedCuisine = Cuisine.Find(parameters.id);
-         var CuisineTasks = SelectedCuisine.GetTasks();
+         var CuisineRestaurants = SelectedCuisine.GetRestaurants();
          model.Add("cuisine", SelectedCuisine);
-         model.Add("restaurant", CuisineTasks);
+         model.Add("restaurants", CuisineRestaurants);
 
          return View["cuisine.cshtml", model];
       };
@@ -63,7 +63,7 @@ namespace BestRestaurants
 
       Patch["cuisine/edit/{id}"] = parameters => {
         Cuisine SelectedCuisine = Cuisine.Find(parameters.id);
-        SelectedCuisine.Update(Request.Form["cuisine-name"]);
+        SelectedCuisine.Update(Request.Form["cuisine-type"]);
 
       return View["success.cshtml"];
       };

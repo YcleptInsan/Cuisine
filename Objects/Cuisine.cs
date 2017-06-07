@@ -11,8 +11,8 @@ namespace BestRestaurants
 
     public Cuisine(string type, int id = 0)
     {
-      _id = id;
       _type = type;
+      _id = id;
     }
 
     public override bool Equals(System.Object otherCuisine)
@@ -141,7 +141,7 @@ namespace BestRestaurants
       return foundCuisine;
     }
 
-    public List<Restaurant> GetRestaurant()
+    public List<Restaurant> GetRestaurants()
    {
      SqlConnection conn = DB.Connection();
      conn.Open();
