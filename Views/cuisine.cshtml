@@ -1,17 +1,17 @@
-<h2>Here are all the tasks in this category:</h2>
+<h2>Here are all the Restaurants for this Cuisine :</h2>
 
-@if (@Model["tasks"].Count == 0)
+@if (@Model["restaurants"].Count == 0)
 {
-  <p>No tasks have been added yet!</p>
+  <p>No restaurants have been added yet!</p>
 }
 else
 {
   <ol>
-    @foreach (var task in @Model["tasks"])
+    @foreach (var restaurant in @Model["restaurants"])
     {
-      <li>@task.GetDescription()</li>
+      <li>@restaurant.GetName()</li>
     }
   </ol>
 }
-<p><a href="/tasks/new">Add a new task</a></p>
+<p><a href="/restaurant/new">Add a new restaurant</a></p>
 <p><a href="/">Return to Main Page</a></p>
