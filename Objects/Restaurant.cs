@@ -68,10 +68,10 @@ namespace BestRestaurants
 
       while(rdr.Read())
       {
-        int taskId = rdr.GetInt32(0);
-        string taskName = rdr.GetString(1);
-        int taskCuisineId = rdr. GetInt32(2);
-        Restaurant newRestaurant = new Restaurant(taskName,taskCuisineId, taskId);
+        int restaurantId = rdr.GetInt32(0);
+        string restaurantName = rdr.GetString(1);
+        int restaurantCuisineId = rdr. GetInt32(2);
+        Restaurant newRestaurant = new Restaurant(restaurantName,restaurantCuisineId, restaurantId);
         allRestaurants.Add(newRestaurant);
       }
 
