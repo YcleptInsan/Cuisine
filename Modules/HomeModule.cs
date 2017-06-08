@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 using Nancy;
 using Nancy.ViewEngines.Razor;
 
@@ -55,25 +56,32 @@ namespace BestRestaurants
          return View["cuisine.cshtml", model];
        };
 
-       Get["cuisine/edit/{id}"] = parameters => {
+       Get["/cuisine/edit/{id}"] = parameters => {
+         Dictionary<string, object> model = new Dictionary<string, object>();
          Cuisine SelectedCuisine = Cuisine.Find(parameters.id);
-
-         return View["cuisine_edit.cshtml", SelectedCuisine];
+         List<Restaurant> CuisineRestaurants = SelectedCuisine.GetRestaurants();
+         model.Add("cuisine", SelectedCuisine);
+         model.Add("restaurants", CuisineRestaurants);
+         return View["cuisine_edit.cshtml", model];
        };
 
-       Patch["cuisine/edit/{id}"] = parameters => {
+       Patch["/cuisine/edit/{id}"] = parameters => {
          Cuisine SelectedCuisine = Cuisine.Find(parameters.id);
          SelectedCuisine.Update(Request.Form["cuisine-type"]);
 
          return View["success.cshtml"];
        };
 
-       Get["cuisine/delete/{id}"] = parameters => {
+       Get["/cuisine/delete/{id}"] = parameters => {
+         Dictionary<string, object> model = new Dictionary<string, object>();
          Cuisine SelectedCuisine = Cuisine.Find(parameters.id);
-         return View["cuisine_delete.cshtml", SelectedCuisine];
+         List<Restaurant> CuisineRestaurants = SelectedCuisine.GetRestaurants();
+         model.Add("cuisine", SelectedCuisine);
+         model.Add("restaurants", CuisineRestaurants);
+         return View["cuisine_delete.cshtml", model];
        };
 
-       Delete["cuisine/delete/{id}"] = parameters => {
+       Delete["/cuisine/delete/{id}"] = parameters => {
          Cuisine SelectedCuisine = Cuisine.Find(parameters.id);
          SelectedCuisine.Delete();
          return View["success.cshtml"];

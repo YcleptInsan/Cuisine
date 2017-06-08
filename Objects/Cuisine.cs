@@ -190,6 +190,7 @@ namespace BestRestaurants
     cuisineIdParameter.ParameterName = "@CuisineId";
     cuisineIdParameter.Value = this.GetId();
     cmd.Parameters.Add(cuisineIdParameter);
+
     SqlDataReader rdr = cmd.ExecuteReader();
 
     while(rdr.Read())
@@ -213,7 +214,7 @@ namespace BestRestaurants
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("DELETE FROM cuisine WHERE id = @CuisineId; DELETE FROM restaurants WHERE cuisine_id = @CuisineId;", conn);
+      SqlCommand cmd = new SqlCommand("DELETE FROM cuisine WHERE id = @CuisineId; DELETE FROM restaurant WHERE cuisine_id = @CuisineId;", conn);
 
       SqlParameter cuisineIdParameter = new SqlParameter();
       cuisineIdParameter.ParameterName = "@CuisineId";
